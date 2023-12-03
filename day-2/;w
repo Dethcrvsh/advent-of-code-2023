@@ -1,0 +1,62 @@
+from typing import List, Dict
+from pprint import pprint
+
+
+INPUT_FILE: str = "input"
+COLORS: List[str] = ["red", "green", "blue"]
+POSSIBLE_GAMES: Dict[str, int] = {"red": 12, "green": 13, "blue": 14}
+
+
+def get_parsed_games(lines: List[str]) -> List[List[Dict[str, int]]]:
+    games = [line.split(": ")[1].strip() for line in lines]
+    games = [game.split("; ") for game in games]
+    games = [[game_round.replace(",", "").split() for game_round in game] for game in games]
+    
+    games = [
+            [{game_round[i+1]: int(game_round[i]) for i in range(0, len(game_round), 2)} for game_round in game]
+            for game in games
+    ]
+
+    return games
+
+def get_valid_games(games: List[Dict[str, int]]) -> List[int]:
+    """Get the numbers of the valid games"""
+    valid_games: List[int] = []
+
+    for game_num, game in enumerate(games):
+        for color, count in game.items():
+            if POSSIBLE_GAMES[color] < count:
+                break
+        # Never thought I would actually find a use for this syntax
+        else:
+            valid_games.append(game_num + 1)
+
+    return valid_games
+
+
+def solve_puzzle_1() -> int:
+    lines: List[str] = open(INPUT_FILE, "r").readlines()
+
+    games = get_parsed_games(lines)
+
+    games_max: List[Dict[str, int]] = []
+
+    for game_num, game in enumerate(games):
+        games_max.append({color: 0 for color in COLORS})
+        continue
+
+        for game_round in game:
+            for color, count in game_round.items():
+                if games_max[game_num][color] < count:
+                    games_max[game_num][color] = count
+
+        pprint(games_max)
+
+    return 0
+
+
+
+if __name__ == "__main__":
+    print("⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆   Advent of Code - Day 2   ⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆\n")
+    print(f"Puzzle 1: {solve_puzzle_1()}")
+
