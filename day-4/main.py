@@ -4,6 +4,11 @@ from typing import List
 INPUT_FILE: str = "input"
 
 
+def parse_scratch_cards(file) -> List[List[List[str]]]:
+    lines = [line[line.index(":")+1:].strip() for line in file.readlines()]
+    return [[subline.split(" ") for subline in line.split("|")] for line in lines]
+
+
 def get_winning_numbers(scratch_card: List[List[str]]) -> int:
     numbers: List[str] = scratch_card[0]
     winning_numbers: List[str] = scratch_card[1]
@@ -29,8 +34,7 @@ def get_scratch_card_copies(scratch_cards: List[List[List[str]]]) -> List[int]:
 
 def solve_puzzle_1() -> int:
     file = open(INPUT_FILE, "r")
-    lines = [line[line.index(":")+1:].strip() for line in file.readlines()]
-    scratch_cards: List[List[List[str]]] = [[subline.split(" ") for subline in line.split("|")] for line in lines]
+    scratch_cards: List[List[List[str]]] = parse_scratch_cards(file)
 
     final_score: int = 0
 
@@ -43,8 +47,7 @@ def solve_puzzle_1() -> int:
 
 def solve_puzzle_2() -> int:
     file = open(INPUT_FILE, "r")
-    lines = [line[line.index(":")+1:].strip() for line in file.readlines()]
-    scratch_cards: List[List[List[str]]] = [[subline.split(" ") for subline in line.split("|")] for line in lines]
+    scratch_cards: List[List[List[str]]] = parse_scratch_cards(file)
 
     scratch_card_copies: List[int] = get_scratch_card_copies(scratch_cards)
 
