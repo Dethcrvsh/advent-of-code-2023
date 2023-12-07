@@ -55,11 +55,27 @@ def get_highest_card(hand: tuple[str, int]) -> tuple[str, int]:
     return possible_hands[-1]
 
 
+def compare2(hand1: tuple[str, int], hand2: tuple[str, int]):
+    hand1_point: int = list(map(lambda f: f(get_highest_card(hand1)[0]), HANDS)).index(True)
+    hand2_point: int = list(map(lambda f: f(get_highest_card(hand2)[0]), HANDS)).index(True)
+
+    if hand1_point < hand2_point:
+        return -1
+    if hand1_point > hand2_point:
+        return 1
+
+    if hand1[0] == hand2[0]:
+        return 0
+
+    # Find the first differing cards in the two hands
+    card1, card2 = [(a, b) for a, b in zip(hand1[0], hand2[0]) if a != b][0]
+
+    return -1 if CARD_STRENGTH.index(card1) < CARD_STRENGTH.index(card2) else 1
+
+
 def compare(hand1: tuple[str, int], hand2: tuple[str, int]):
     hand1_point: int = list(map(lambda f: f(hand1[0]), HANDS)).index(True)
     hand2_point: int = list(map(lambda f: f(hand2[0]), HANDS)).index(True)
-
-    print(f"{hand1} {hand2}")
 
     if hand1_point < hand2_point:
         return -1
@@ -86,8 +102,7 @@ def solve_puzzle_1():
 def solve_puzzle_2() -> int:
     hands: list[tuple[str, int]]  = [(t[0], int(t[1])) for line in open(INPUT_FILE, "r").read().splitlines() for t in [line.split()]]
 
-    hands = list(map(get_highest_card, hands))
-    hands = sorted(hands, key=cmp_to_key(compare))
+    hands = sorted(hands, key=cmp_to_key(compare2))
 
     return sum([(i + 1) * score for i, (_, score) in enumerate(hands)])
 
