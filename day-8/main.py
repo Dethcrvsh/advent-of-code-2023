@@ -72,7 +72,7 @@ def solve_puzzle_2() -> int:
 
 
 if __name__ == "__main__":
-    print("⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆   Advent of Code - Day 7   ⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆\n")
+    print("⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆   Advent of Code - Day 8   ⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆\n")
     print(f"Puzzle 1: {solve_puzzle_1()}")
     print(f"Puzzle 2: {solve_puzzle_2()}")
 
