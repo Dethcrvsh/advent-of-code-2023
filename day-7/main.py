@@ -4,7 +4,8 @@ from functools import reduce, cmp_to_key
 
 INPUT_FILE: str = "input"
 # Sorted from weakest to strongest
-CARD_STRENGTH: str = "23456789TJQKA"
+CARD_STRENGTH: str = "23456789JTQKA"
+CARD_STRENGTH_2: str = "J23456789TQKA"
 
 def is_five_of_a_kind(card: str) -> bool:
     return len(set(card)) == 1
@@ -70,7 +71,7 @@ def compare2(hand1: tuple[str, int], hand2: tuple[str, int]):
     # Find the first differing cards in the two hands
     card1, card2 = [(a, b) for a, b in zip(hand1[0], hand2[0]) if a != b][0]
 
-    return -1 if CARD_STRENGTH.index(card1) < CARD_STRENGTH.index(card2) else 1
+    return -1 if CARD_STRENGTH_2.index(card1) < CARD_STRENGTH_2.index(card2) else 1
 
 
 def compare(hand1: tuple[str, int], hand2: tuple[str, int]):
